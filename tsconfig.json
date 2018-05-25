@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "sourceMap": true,
+        "watch": true,
+        "outDir": "./public/",
+        "noImplicitAny": true,
+    }
+}
