@@ -2,7 +2,7 @@ var path = require('path');
 module.exports = function (env) {
     var isProduction = env === 'production';
     return {
-        entry: './src/app.tsx',
+        entry: './src/index.ts',
         output: {
             path: path.join(__dirname, 'public'),
             filename: 'index.js'
@@ -13,7 +13,7 @@ module.exports = function (env) {
         module: {
             rules: [{
                 loader: 'ts-loader',
-                test: /\.tsx$/,
+                test: /\.ts$/,
                 exclude: /node_modules/
             }]
         },
