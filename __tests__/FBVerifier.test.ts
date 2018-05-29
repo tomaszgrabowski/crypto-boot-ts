@@ -10,14 +10,36 @@ describe('FBQueryParser', () => {
         parser.setup(x=>x.parse(req.object())).returns({
             mode: 'subscribe',
             challenge: 'test',
-            verify_token: 'test'
+            token: 'test'
         });
 
         const verifier = new FBVerifier(req.object(), parser.object(), 'test');
-        expect(verifier.verify()).toBe(true);
+        expect(verifier.verify()).toEqual(true);
     });
 
     test('Parse_WhenCalledWithWrongVerifyToken_ShouldReturnFalse',()=>{
+        const req = new Mock<express.Request>();
+        const parser = new Mock<IFBQueryParser>();
+        parser.setup(x=>x.parse(req.object())).returns({
+            mode: 'subscribe',
+            challenge: 'test',
+            token: 'test'
+        });
 
+        const verifier = new FBVerifier(req.object(), parser.object(), 'test');
+        expect(verifier.verify()).toEqual(true);
+    });
+
+    test('Parse_WhenCalledInNotSubscribeMode_ShouldReturnFalse',()=>{
+        const req = new Mock<express.Request>();
+        const parser = new Mock<IFBQueryParser>();
+        parser.setup(x=>x.parse(req.object())).returns({
+            mode: 'notasubscribemode',
+            challenge: 'test',
+            token: 'test'
+        });
+
+        const verifier = new FBVerifier(req.object(), parser.object(), 'test');
+        expect(verifier.verify()).toEqual(false);
     });
 });

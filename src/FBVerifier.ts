@@ -8,7 +8,7 @@ export default class FBVerifier {
 
     verify():boolean{
         let params = this.parser.parse(this.req);
-        console.log(params.token, this.verifyToken);
+        console.log(params.token, this.verifyToken,  params.token === this.verifyToken);
         return params.mode === 'subscribe' && params.token === this.verifyToken;
     }
 }
