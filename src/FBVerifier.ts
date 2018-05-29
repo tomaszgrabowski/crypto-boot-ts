@@ -1,18 +1,16 @@
 import * as express from "express";
+import IFBQueryParser from "./interfaces/IFBQueryParser";
 
 export default class FBVerifier {
-    verifyToken: string = 'anna';
-    token: string;
-    mode: string;
-    challenge: string;
 
-    constructor(req: express.Request) {
-        this.mode = req.query['hub.mode'];
-        this.token = req.query['hub.verify_token'];
-        this.challenge = req.query['hub.challenge'];
+    constructor(private req: express.Request, private parser: IFBQueryParser, private verifyToken: string) {
     }
 
-    verify(){
-        return (this.mode === 'subscribe' && this.token === this.verifyToken);
+    verify():boolean{
+        let params = this.parser.parse(this.req);
+        console.log(params.token, this.verifyToken);
+        return params.mode === 'subscribe' && params.token === this.verifyToken;
     }
 }
+
+

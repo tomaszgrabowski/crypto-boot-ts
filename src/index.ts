@@ -16,31 +16,13 @@ app.listen(port, () => {
   });
 
   router.get('/', (req: express.Request, res: express.Response) => {
-    //verification process is taken place here
-        
-        if (mode && token) {
-
-            // Checks the mode and token sent is correct
-            if (mode === 'subscribe' && token === this.verifyToken) {
-
-                // Responds with the challenge token from the request
-                console.log('WEBHOOK_VERIFIED');
-                res.status(200).send(challenge);
-
-            } else {
-                // Responds with '403 Forbidden' if verify tokens do not match
-                res.sendStatus(403);
-            }
-        }
-
-
-
-    let verifier = new FBVerifier(req, res);
+    let verifier = new FBVerifier(req);
     if (verifier.verify()) {
-
+      console.log('WEBHOOK_VERIFIED');
+      res.status(200).send(req.body['hub.challenge']);
     }
     else {
-
+      res.sendStatus(403);
     }
   });
 
