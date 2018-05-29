@@ -1,7 +1,8 @@
 import * as express from "express";
 import IFBQueryParser from "./interfaces/IFBQueryParser";
+import IFBVerifier from "./interfaces/IFBVerifier";
 
-export default class FBVerifier {
+export default class FBVerifier implements IFBVerifier {
 
     constructor(private req: express.Request, private parser: IFBQueryParser, private verifyToken: string) {
     }
@@ -12,5 +13,7 @@ export default class FBVerifier {
         return params.mode === 'subscribe' && params.token === this.verifyToken;
     }
 }
+
+
 
 
