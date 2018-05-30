@@ -3,7 +3,7 @@ import { Mock, It } from 'moq.ts';
 import * as express from 'express';
 import IFBQueryParser from "../src/interfaces/IFBQueryParser";
 
-describe('FBQueryParser', () => {
+describe('FBVerifier', () => {
     test('Parse_WhenCalledWithProperVerifyToken_ShouldReturnTrue',()=>{
         const req = new Mock<express.Request>();
         const parser = new Mock<IFBQueryParser>();
@@ -13,8 +13,8 @@ describe('FBQueryParser', () => {
             token: 'test'
         });
 
-        const verifier = new FBVerifier(req.object(), parser.object(), 'test');
-        expect(verifier.verify()).toEqual(true);
+        const verifier = new FBVerifier('test');
+        expect(verifier.verify(req.object(), parser.object())).toEqual(true);
     });
 
     test('Parse_WhenCalledWithWrongVerifyToken_ShouldReturnFalse',()=>{
@@ -26,8 +26,8 @@ describe('FBQueryParser', () => {
             token: 'test'
         });
 
-        const verifier = new FBVerifier(req.object(), parser.object(), 'test');
-        expect(verifier.verify()).toEqual(true);
+        const verifier = new FBVerifier('test');
+        expect(verifier.verify(req.object(), parser.object())).toEqual(true);
     });
 
     test('Parse_WhenCalledInNotSubscribeMode_ShouldReturnFalse',()=>{
@@ -39,7 +39,7 @@ describe('FBQueryParser', () => {
             token: 'test'
         });
 
-        const verifier = new FBVerifier(req.object(), parser.object(), 'test');
-        expect(verifier.verify()).toEqual(false);
+        const verifier = new FBVerifier('test');
+        expect(verifier.verify(req.object(), parser.object())).toEqual(false);
     });
 });

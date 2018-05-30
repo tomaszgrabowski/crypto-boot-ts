@@ -1,6 +1,9 @@
 import * as express from "express";
 import IFBVerifier from "./interfaces/IFBVerifier";
 import IFactory from "./interfaces/IFactory";
+import SystemMessages from "./SystemMessages";
+import FBQueryParser from "./FBQueryParser";
+import IFBQueryParser from "./interfaces/IFBQueryParser";
 
 
 export default class Bootstrap {
@@ -10,13 +13,16 @@ export default class Bootstrap {
   private app: express.Application;
   private router: express.Router;
   private verifier: IFBVerifier;
+  private parser: IFBQueryParser;
   private config = require('../config.json');
+  private accessToken = process.env.PAGE_ACCESS_TOKEN;
 
   constructor() {
-    this.port = process.env.PORT || 3000;
+    this.port = process.env.PORT || this.config.port;
     this.app = this.factory.createExpressApp();
     this.router = this.factory.createExpressRouter();
-    this.verifier = this.factory.createFBVerifier(this.config.verifyToken);
+    this.verifier = this.factory.createFBVerifier(this.accessToken);
+    this.parser = this.factory.createFBQueryParser();
   }
 
   run(): void {
@@ -25,18 +31,20 @@ export default class Bootstrap {
 
     this.app.listen(this.port, () => {
 
-      console.log(`Crypto-boot has started, app is listenting on port: ${this.port}`);
+      console.log(`${SystemMessages.init}: ${this.port}`);
 
       this.router.get('/privacy', (req: express.Request, res: express.Response) => {
         res.json("privacy");
       });
 
       this.router.get('/', (req: express.Request, res: express.Response) => {
-        if (this.verifier.verify()) {
-          console.log('WEBHOOK_VERIFIED');
+        console.log(SystemMessages.verification);
+        if (this.verifier.verify(req, this.parser)) {
+          console.log(SystemMessages.verificationSuccess);
           res.status(200).send(req.body['hub.challenge']);
         }
         else {
+          console.log(SystemMessages.verificationFail);
           res.sendStatus(403);
         }
       });

@@ -4,12 +4,11 @@ import IFBVerifier from "./interfaces/IFBVerifier";
 
 export default class FBVerifier implements IFBVerifier {
 
-    constructor(private req: express.Request, private parser: IFBQueryParser, private verifyToken: string) {
+    constructor(private verifyToken: string) {
     }
 
-    verify():boolean{
-        let params = this.parser.parse(this.req);
-        console.log(params.token, this.verifyToken,  params.token === this.verifyToken);
+    verify(req: express.Request, parser: IFBQueryParser):boolean{
+        let params = parser.parse(req);
         return params.mode === 'subscribe' && params.token === this.verifyToken;
     }
 }
