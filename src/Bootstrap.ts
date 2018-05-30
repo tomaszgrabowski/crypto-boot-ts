@@ -4,6 +4,7 @@ import IFactory from "./interfaces/IFactory";
 import SystemMessages from "./SystemMessages";
 import FBQueryParser from "./FBQueryParser";
 import IFBQueryParser from "./interfaces/IFBQueryParser";
+import Factory from "./Factory";
 
 
 export default class Bootstrap {
@@ -18,6 +19,7 @@ export default class Bootstrap {
   private accessToken = process.env.PAGE_ACCESS_TOKEN;
 
   constructor() {
+    this.factory = new Factory();
     this.port = process.env.PORT || this.config.port;
     this.app = this.factory.createExpressApp();
     this.router = this.factory.createExpressRouter();
