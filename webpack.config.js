@@ -17,6 +17,7 @@ module.exports = function (env) {
                 exclude: /node_modules/
             }]
         },
+        externals: { 'express': 'commonjs express' }
         // devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
         // devServer: {
         //     contentBase: path.join(__dirname, 'public')

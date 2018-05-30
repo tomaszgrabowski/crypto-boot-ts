@@ -10,17 +10,15 @@ import Factory from "./Factory";
 export default class Bootstrap {
 
   private factory: IFactory;
-  private port: number | string;
+  private port: number | string = 3000;
   private app: express.Application;
   private router: express.Router;
   private verifier: IFBVerifier;
   private parser: IFBQueryParser;
-  private config = require('../config.json');
   private accessToken = process.env.PAGE_ACCESS_TOKEN;
 
   constructor() {
     this.factory = new Factory();
-    this.port = process.env.PORT || this.config.port;
     this.app = this.factory.createExpressApp();
     this.router = this.factory.createExpressRouter();
     this.verifier = this.factory.createFBVerifier(this.accessToken);
