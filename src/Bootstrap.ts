@@ -24,6 +24,7 @@ export default class Bootstrap {
     this.router = this.factory.createExpressRouter();
     this.verifier = this.factory.createFBVerifier(this.accessToken);
     this.parser = this.factory.createFBQueryParser();
+    this.sourceValidator = this.factory.createSourceValidator();
   }
 
   run(): void {

@@ -3,6 +3,7 @@ import FBQueryParser from '../src/FBQueryParser';
 import IFactory from "../src/interfaces/IFactory";
 import FBVerifier from "../src/FBVerifier";
 import * as express from 'express';
+import RequestSourceValidator from "../src/RequestSourceValidator";
 
 describe('Factory', ()=>{
     let factory: IFactory;
@@ -35,5 +36,13 @@ describe('Factory', ()=>{
     test('createExpressRouter_WhenCalled_ShouldCreateExpressRouterObject', ()=>{
         const router = factory.createExpressRouter()
         expect(router).not.toBeNull;
+    });
+
+    test('createRequestSourceValidator_WhenCalled_ShouldCreateRequestSourceValidator',()=>{
+        const validator = factory.createSourceValidator();
+        expect(validator).not.toBeNull;
+
+        //todo: how to check on interface instead??
+        expect(validator).toBeInstanceOf(RequestSourceValidator);
     });
 })
