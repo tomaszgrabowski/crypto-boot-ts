@@ -15,6 +15,7 @@ export default class Bootstrap {
   private router: express.Router;
   private verifier: IFBVerifier;
   private parser: IFBQueryParser;
+  private sourceValidator: IRequestSourceValidator;
   private accessToken = process.env.PAGE_ACCESS_TOKEN;
 
   constructor() {
@@ -50,8 +51,22 @@ export default class Bootstrap {
       });
 
       this.router.post('/', (req: express.Request, res: express.Response) => {
-        //talking
+
+        if(this.sourceValidator.validate(req)){
+          console.log(SystemMessages.unknownSource);
+          return;
+        }
+
+        //iterate messages
+          //check msg or postback
+            //handle msg
+            //handle postback
+
       })
     });
   }
+}
+
+interface IRequestSourceValidator{
+  validate(req:express.Request):boolean
 }
