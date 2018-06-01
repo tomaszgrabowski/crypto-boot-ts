@@ -4,6 +4,7 @@ import IFactory from "./interfaces/IFactory";
 import SystemMessages from "./SystemMessages";
 import FBQueryParser from "./FBQueryParser";
 import IFBQueryParser from "./interfaces/IFBQueryParser";
+import ICommunicationService from "./interfaces/ICommunicationService";
 import Factory from "./Factory";
 
 
@@ -16,9 +17,11 @@ export default class Bootstrap {
   private verifier: IFBVerifier;
   private parser: IFBQueryParser;
   private sourceValidator: IRequestSourceValidator;
-  private accessToken = process.env.PAGE_ACCESS_TOKEN;
+  private accessToken: string;
+  private communicationService: ICommunicationService;
 
   constructor() {
+    this.accessToken = process.env.PAGE_ACCESS_TOKEN
     this.factory = new Factory();
     this.app = this.factory.createExpressApp();
     this.router = this.factory.createExpressRouter();
@@ -52,17 +55,14 @@ export default class Bootstrap {
       });
 
       this.router.post('/', (req: express.Request, res: express.Response) => {
-
+        console.log(SystemMessages.messageRecived);
         if(this.sourceValidator.validate(req)){
           console.log(SystemMessages.unknownSource);
           return;
         }
 
-        //iterate messages
-          //check msg or postback
-            //handle msg
-            //handle postback
-
+        this.communicationService.processRequest(req, res);
+        
       })
     });
   }

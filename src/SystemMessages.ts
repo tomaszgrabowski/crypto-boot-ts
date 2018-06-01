@@ -3,7 +3,8 @@ enum SystemMessages{
     verification = "Veryfication process started...",
     verificationSuccess = "Verification process successful!",
     verificationFail = "Verification process fail!",
-    unknownSource = "Request source unknow, skipping..."
+    unknownSource = "Request source unknow, skipping...",
+    messageRecived = "Message incoming..."
 }
 
 export default SystemMessages;
