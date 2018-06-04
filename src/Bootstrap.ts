@@ -6,6 +6,8 @@ import FBQueryParser from "./FBQueryParser";
 import IFBQueryParser from "./interfaces/IFBQueryParser";
 import ICommunicationService from "./interfaces/ICommunicationService";
 import Factory from "./Factory";
+import IRequestSourceValidator from "./interfaces/IRequestSourceValidator";
+import CommunicationService from "./CommunicationService";
 
 
 export default class Bootstrap {
@@ -56,18 +58,17 @@ export default class Bootstrap {
 
       this.router.post('/', (req: express.Request, res: express.Response) => {
         console.log(SystemMessages.messageRecived);
-        if(this.sourceValidator.validate(req)){
+        if(!this.sourceValidator.validate(req)){
           console.log(SystemMessages.unknownSource);
+          res.status(200).send(SystemMessages.eventReceived);
           return;
         }
 
         this.communicationService.processRequest(req, res);
-        
+
       })
     });
   }
 }
 
-interface IRequestSourceValidator{
-  validate(req:express.Request):boolean
-}
+

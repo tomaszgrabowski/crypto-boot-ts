@@ -2,6 +2,7 @@ import IFBQueryParser from "./IFBQueryParser";
 import IFBVerifier from "./IFBVerifier";
 import * as express from 'express';
 import IRequestSourceValidator from "./IRequestSourceValidator";
+import IFBMessageParser from "./IFBMessageParser";
 
 export default interface IFactory{
     createFBQueryParser(): IFBQueryParser;
@@ -9,4 +10,5 @@ export default interface IFactory{
     createExpressApp():express.Application;
     createExpressRouter():express.Router;
     createSourceValidator(): IRequestSourceValidator;
+    createIFBMessageParser(): IFBMessageParser;
 }
