@@ -1,7 +1,7 @@
 import ICommunicationService from "../src/interfaces/ICommunicationService";
 import CommunicationService from "../src/CommunicationService";
 import reqBodyFixture from "../fixtures/RequestBody";
-import { Mock, It, Times } from "moq.ts";
+import { Mock, It, Times, verifierFactory } from "moq.ts";
 import * as express from 'express';
 import IFBMessageParser from "../src/interfaces/IFBMessageParser";
 import Command from "../src/Command";
@@ -30,7 +30,7 @@ describe('CommunicationService', () => {
 
         factory = new Mock<IFactory>();
         factory.setup(x => x.createCommandHandler(Command["Price check"])).returns(commandHandler.object());
-        factory.setup(x=>x.createFBMessageParser()).returns(parser.object());
+        factory.setup(x => x.createFBMessageParser()).returns(parser.object());
 
         service = new CommunicationService(factory.object());
         body = reqBodyFixture;
@@ -54,20 +54,22 @@ describe('CommunicationService', () => {
     test('ProcessRequest_WhenCalledForMessage_ShouldCallCommandHandlerRespond', () => {
 
         service.processRequest(req.object(), res.object());
+        factory.setup(x => x.createCommandHandler(Command["Price check"])).returns(commandHandler);
+        commandHandler.verify(x=>x.respond(), Times.Once());
     });
 
-    test('ProcessRequest_WhenCalledForMessageWithoutCommand_ShouldReturnErrorMsg');// ask user to specify question
+    // test('ProcessRequest_WhenCalledForMessageWithoutCommand_ShouldReturnErrorMsg');// ask user to specify question
 
-    test('ProcessRequest_WhenCalledWithCheckCommand_ShouldCallCoinApiAndReturnAskedValueIfCoinExists');
+    // test('ProcessRequest_WhenCalledWithCheckCommand_ShouldCallCoinApiAndReturnAskedValueIfCoinExists');
 
-    test('ProcessRequest_WhenCalledWithCheckCommand_ShouldCallCoinApiAndReturnErrorMsgIfCoinDoesNotExists');
+    // test('ProcessRequest_WhenCalledWithCheckCommand_ShouldCallCoinApiAndReturnErrorMsgIfCoinDoesNotExists');
 
 
-    test('ProcessRequest_WhenCalledForMessageWithCheckCommandOnMultipleCoins_ShouldCallCoinApiOnce');
+    // test('ProcessRequest_WhenCalledForMessageWithCheckCommandOnMultipleCoins_ShouldCallCoinApiOnce');
 
-    test('ProcessRequest_WhenCalledForMessageWithCheckCommandOnMultipleCoins_ShouldReturnAskedValuesForEachCoinOrErrorForNonExistingOnes');// "check coin btc eth zec"
+    // test('ProcessRequest_WhenCalledForMessageWithCheckCommandOnMultipleCoins_ShouldReturnAskedValuesForEachCoinOrErrorForNonExistingOnes');// "check coin btc eth zec"
 
-    test('ProcessRequest_WhenEndpointError_ShouldReturnNetworkError');
+    // test('ProcessRequest_WhenEndpointError_ShouldReturnNetworkError');
 
 
 });

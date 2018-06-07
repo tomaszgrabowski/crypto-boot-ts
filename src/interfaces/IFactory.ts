@@ -6,6 +6,7 @@ import IFBMessageParser from "./IFBMessageParser";
 import Command from "../Command";
 import { ICommandHandler } from "./ICommandHandler";
 import ICommunicationService from "./ICommunicationService";
+import CommandWrapper from "../CommandWrapper";
 
 export default interface IFactory{
     createFBQueryParser(): IFBQueryParser;
@@ -14,6 +15,6 @@ export default interface IFactory{
     createExpressRouter():express.Router;
     createSourceValidator(): IRequestSourceValidator;
     createFBMessageParser(): IFBMessageParser;
-    createCommandHandler(command: Command): ICommandHandler;
+    createCommandHandler(command: CommandWrapper): ICommandHandler;
     createCommunicationService(): ICommunicationService;
 }

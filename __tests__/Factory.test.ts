@@ -4,6 +4,8 @@ import IFactory from "../src/interfaces/IFactory";
 import FBVerifier from "../src/FBVerifier";
 import * as express from 'express';
 import RequestSourceValidator from "../src/RequestSourceValidator";
+import CommunicationService from "../src/CommunicationService";
+import FBMessageParser from "../src/FBMessageParser";
 
 describe('Factory', ()=>{
     let factory: IFactory;
@@ -45,4 +47,23 @@ describe('Factory', ()=>{
         //todo: how to check on interface instead??
         expect(validator).toBeInstanceOf(RequestSourceValidator);
     });
+
+    test('createExpressRouter_WhenCalled_ShouldCreateCommunicationServiceObject', ()=>{
+        const commService = factory.createCommunicationService()
+        expect(commService).not.toBeNull;
+        expect(commService).toBeInstanceOf(CommunicationService);
+    });
+
+    test('createExpressRouter_WhenCalled_ShouldCreateFBMessageParserObject', ()=>{
+        const parser = factory.createFBMessageParser()
+        expect(parser).not.toBeNull;
+        expect(parser).toBeInstanceOf(FBMessageParser);
+    });
+
+    // test('createExpressRouter_WhenCalled_ShouldCreateCommandHandlerObject', ()=>{
+    //     //many tests
+    //     const handler = factory.createCommandHandler()
+    //     expect(handler).not.toBeNull;
+    //     expect(handler).toBeInstanceOf(CommandHandler);
+    // });
 })

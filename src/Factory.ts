@@ -10,15 +10,18 @@ import IFBMessageParser from "./interfaces/IFBMessageParser";
 import { ICommandHandler } from "./interfaces/ICommandHandler";
 import Command from "./Command";
 import ICommunicationService from "./interfaces/ICommunicationService";
+import CommunicationService from "./CommunicationService";
+import FBMessageParser from "./FBMessageParser";
+import CommandWraper from "./CommandWrapper";
 
 export default class Factory implements IFactory {
     createCommunicationService(): ICommunicationService {
-        throw new Error("Method not implemented.");
+        return new CommunicationService(this);
     }
     createFBMessageParser(): IFBMessageParser {
-        throw new Error("Method not implemented.");
+        return new FBMessageParser
     }
-    createCommandHandler(command: Command): ICommandHandler {
+    createCommandHandler(command: CommandWraper): ICommandHandler {
         throw new Error("Method not implemented.");
     }
     createSourceValidator(): IRequestSourceValidator {
