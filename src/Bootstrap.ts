@@ -17,7 +17,6 @@ export default class Bootstrap {
   private app: express.Application;
   private router: express.Router;
   private verifier: IFBVerifier;
-  private parser: IFBQueryParser;
   private sourceValidator: IRequestSourceValidator;
   private accessToken: string;
   private communicationService: ICommunicationService;
@@ -28,8 +27,8 @@ export default class Bootstrap {
     this.app = this.factory.createExpressApp();
     this.router = this.factory.createExpressRouter();
     this.verifier = this.factory.createFBVerifier(this.accessToken);
-    this.parser = this.factory.createFBQueryParser();
     this.sourceValidator = this.factory.createSourceValidator();
+    this.communicationService = this.factory.createCommunicationService();
   }
 
   run(): void {
@@ -46,7 +45,7 @@ export default class Bootstrap {
 
       this.router.get('/', (req: express.Request, res: express.Response) => {
         console.log(SystemMessages.verification);
-        if (this.verifier.verify(req, this.parser)) {
+        if (this.verifier.verify(req)) {
           console.log(SystemMessages.verificationSuccess);
           res.status(200).send(req.body['hub.challenge']);
         }
@@ -60,11 +59,12 @@ export default class Bootstrap {
         console.log(SystemMessages.messageRecived);
         if(!this.sourceValidator.validate(req)){
           console.log(SystemMessages.unknownSource);
-          res.status(200).send(SystemMessages.eventReceived);
+          res.sendStatus(404);
           return;
         }
 
         this.communicationService.processRequest(req, res);
+        res.status(200).send(SystemMessages.eventReceived);
 
       })
     });

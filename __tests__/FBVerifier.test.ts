@@ -2,6 +2,7 @@ import FBVerifier from "../src/FBVerifier";
 import { Mock, It } from 'moq.ts';
 import * as express from 'express';
 import IFBQueryParser from "../src/interfaces/IFBQueryParser";
+import IFactory from "../src/interfaces/IFactory";
 
 describe('FBVerifier', () => {
     test('Parse_WhenCalledWithProperVerifyToken_ShouldReturnTrue',()=>{
@@ -12,9 +13,11 @@ describe('FBVerifier', () => {
             challenge: 'test',
             token: 'test'
         });
+        const factory = new Mock<IFactory>();
+        factory.setup(x=>x.createFBQueryParser()).returns(parser.object());
 
-        const verifier = new FBVerifier('test');
-        expect(verifier.verify(req.object(), parser.object())).toEqual(true);
+        const verifier = new FBVerifier(factory.object(), 'test');
+        expect(verifier.verify(req.object())).toEqual(true);
     });
 
     test('Parse_WhenCalledWithWrongVerifyToken_ShouldReturnFalse',()=>{
@@ -25,9 +28,11 @@ describe('FBVerifier', () => {
             challenge: 'test',
             token: 'test'
         });
+        const factory = new Mock<IFactory>();
+        factory.setup(x=>x.createFBQueryParser()).returns(parser.object());
 
-        const verifier = new FBVerifier('test');
-        expect(verifier.verify(req.object(), parser.object())).toEqual(true);
+        const verifier = new FBVerifier(factory.object(), 'test');
+        expect(verifier.verify(req.object())).toEqual(true);
     });
 
     test('Parse_WhenCalledInNotSubscribeMode_ShouldReturnFalse',()=>{
@@ -38,8 +43,9 @@ describe('FBVerifier', () => {
             challenge: 'test',
             token: 'test'
         });
-
-        const verifier = new FBVerifier('test');
-        expect(verifier.verify(req.object(), parser.object())).toEqual(false);
+        const factory = new Mock<IFactory>();
+        factory.setup(x=>x.createFBQueryParser()).returns(parser.object());
+        const verifier = new FBVerifier(factory.object(), 'test');
+        expect(verifier.verify(req.object())).toEqual(false);
     });
 });
