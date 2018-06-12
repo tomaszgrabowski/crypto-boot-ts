@@ -1,3 +1,3 @@
-export interface ICommandHandler{
-    respond(): void;
+export default interface ICommandHandler{
+    
 }

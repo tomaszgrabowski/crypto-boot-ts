@@ -15,14 +15,17 @@ export default class FBMessageParser implements IFBMessageParser {
                     if (_.startsWith(messageText, enumMember)) {
                         wrapper.command = (<any>Command)[enumMember];
                         wrapper.error = null;
+                        break;
                     } else {
                         wrapper.command = null;
                         wrapper.error = CommandParserError["Wrong message format, please type 'help' for more infromation..."]
+                        break;
                     }
                 }
                 else {
                     wrapper.command = null;
                     wrapper.error = CommandParserError["Unknown command, please type 'help' for more infromation..."]
+                    break;
                 }
 
             }

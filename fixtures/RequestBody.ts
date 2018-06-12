@@ -18,7 +18,7 @@ const reqBodyFixture: RequestBody = {
                     "message": {
                         "mid": "mid.$cAADq9E3x9MppxIF7NVjkzwyPgk5z",
                         "seq": 274504,
-                        "text": "coin check eth"
+                        "text": "Price check eth"
                     }
                 }
             ]

@@ -1,6 +1,5 @@
 enum Command{
-    "Price check",
-    "Coin exchange"
+    "Price check"
 };
 
 export default Command;
