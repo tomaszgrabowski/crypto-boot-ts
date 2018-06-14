@@ -1,3 +1,5 @@
+import CommandParserError from "../CommandParserError";
+
 export class RequestBody {
     object: string;
     entry: Entry[]
@@ -24,4 +26,8 @@ export class Message{
     mid: string;
     seq: number;
     text: string
+}
+
+export class HandlerResponse{
+    text: string;
 }

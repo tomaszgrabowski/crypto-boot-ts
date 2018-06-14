@@ -1,7 +1,7 @@
 import ICommunicationService from "../src/interfaces/ICommunicationService";
 import CommunicationService from "../src/CommunicationService";
 import reqBodyFixture from "../fixtures/RequestBody";
-import { Mock, It, Times, verifierFactory } from "moq.ts";
+import { Mock, It, Times } from "moq.ts";
 import * as express from 'express';
 import IFBMessageParser from "../src/interfaces/IFBMessageParser";
 import Command from "../src/Command";
@@ -52,7 +52,6 @@ describe('CommunicationService', () => {
         const wrapper = new CommandWraper();
         wrapper.command = Command["Price check"];
         service.processRequest(req.object(), res.object());
-        factory.setup(x => x.createCommandHandler(wrapper)).returns(commandHandler);
         commandHandler.verify(x=>x.respond(It.IsAny(), It.IsAny()), Times.Once());
     });
 

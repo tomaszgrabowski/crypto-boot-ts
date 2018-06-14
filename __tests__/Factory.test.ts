@@ -9,6 +9,8 @@ import FBMessageParser from "../src/FBMessageParser";
 import Command from "../src/Command";
 import CommandWraper from "../src/CommandWrapper";
 import PriceCheckCommandHandler from "../src/commandHandlers/PriceCheckCommandHandler";
+import WrongFormatCommandHandler from "../src/commandHandlers/WrongFormatCommandHandler";
+import UnknownCommandHandler from "../src/commandHandlers/UnknownCommandHandler";
 
 describe('Factory', () => {
     let factory: IFactory;
@@ -70,9 +72,13 @@ describe('Factory', () => {
     });
     test('createCommandHandler_WhenCalledWithStringNotStartingWithCommandText_ShouldRetutnWrongFormatCommandHandler', () => {
         const text = 'blah blah Price check BTC';
+        const handler = factory.createCommandHandler(text);
+        expect(handler).toBeInstanceOf(WrongFormatCommandHandler);
     });
     test('createCommandHandler_WhenCalledWithStringNotContainingCommandText_ShouldRetutnUnknownCommandHandler', () => {
         const text = 'blah blah';
+        const handler = factory.createCommandHandler(text);
+        expect(handler).toBeInstanceOf(UnknownCommandHandler);
     });
 
 })

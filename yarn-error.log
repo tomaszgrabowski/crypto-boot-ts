@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add lodash
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add axios @type/axios
 
 PATH: 
   C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\GitExtensions\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\dotnet\;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\;C:\Program Files\nodejs\;C:\Program Files\PuTTY\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;C:\Users\ac567\AppData\Roaming\npm;C:\Users\ac567\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Heroku\bin;C:\Users\ac567\AppData\Local\GitHubDesktop\bin;C:\Users\ac567\AppData\Local\Yarn\bin
@@ -14,7 +14,17 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, lstat 'C:\Users\ac567\Desktop\node-examples\CryptoBoot-ts\node_modules\.bin'
+  Error: https://registry.yarnpkg.com/@type%2faxios: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:65327:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:133155:22)
+      at Request.emit (events.js:160:13)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:134138:10)
+      at Request.emit (events.js:160:13)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:134058:12)
+      at Object.onceWrapper (events.js:255:19)
+      at IncomingMessage.emit (events.js:165:20)
+      at endReadableNT (_stream_readable.js:1101:12)
+      at process._tickCallback (internal/process/next_tick.js:152:19)
 
 npm manifest: 
   {
@@ -46,11 +56,14 @@ npm manifest:
     "dependencies": {
       "@types/express": "^4.11.1",
       "@types/jest": "^22.2.3",
+      "@types/lodash": "^4.14.109",
       "@types/node": "^10.1.2",
+      "@types/request": "^2.47.0",
       "axios": "^0.18.0",
       "body-parser": "^1.18.3",
       "express": "^4.16.3",
-      "request": "^2.72.0",
+      "lodash": "^4.17.10",
+      "request": "^2.87.0",
       "ts-loader": "^4.3.0",
       "typescript": "^2.8.3"
     },
@@ -118,6 +131,10 @@ Lockfile:
       "@types/connect" "*"
       "@types/node" "*"
   
+  "@types/caseless@*":
+    version "0.12.1"
+    resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.1.tgz#9794c69c8385d0192acc471a540d1f8e0d16218a"
+  
   "@types/connect@*":
     version "3.4.32"
     resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.32.tgz#aa0e9616b9435ccad02bc52b5b454ffc2c70ba28"
@@ -143,9 +160,19 @@ Lockfile:
       "@types/express-serve-static-core" "*"
       "@types/serve-static" "*"
   
+  "@types/form-data@*":
+    version "2.2.1"
+    resolved "https://registry.yarnpkg.com/@types/form-data/-/form-data-2.2.1.tgz#ee2b3b8eaa11c0938289953606b745b738c54b1e"
+    dependencies:
+      "@types/node" "*"
+  
   "@types/jest@^22.2.3":
     version "22.2.3"
     resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
+  
+  "@types/lodash@^4.14.109":
+    version "4.14.109"
+    resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.109.tgz#b1c4442239730bf35cabaf493c772b18c045886d"
   
   "@types/mime@*":
     version "2.0.0"
@@ -159,12 +186,25 @@ Lockfile:
     version "10.1.2"
     resolved "https://registry.yarnpkg.com/@types/node/-/node-10.1.2.tgz#1b928a0baa408fc8ae3ac012cc81375addc147c6"
   
+  "@types/request@^2.47.0":
+    version "2.47.0"
+    resolved "https://registry.yarnpkg.com/@types/request/-/request-2.47.0.tgz#76a666cee4cb85dcffea6cd4645227926d9e114e"
+    dependencies:
+      "@types/caseless" "*"
+      "@types/form-data" "*"
+      "@types/node" "*"
+      "@types/tough-cookie" "*"
+  
   "@types/serve-static@*":
     version "1.13.2"
     resolved "https://registry.yarnpkg.com/@types/serve-static/-/serve-static-1.13.2.tgz#f5ac4d7a6420a99a6a45af4719f4dcd8cd907a48"
     dependencies:
       "@types/express-serve-static-core" "*"
       "@types/mime" "*"
+  
+  "@types/tough-cookie@*":
+    version "2.3.3"
+    resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.3.tgz#7f226d67d654ec9070e755f46daebf014628e9d9"
   
   "@webassemblyjs/ast@1.4.3":
     version "1.4.3"
@@ -5312,7 +5352,7 @@ Lockfile:
       stealthy-require "^1.1.0"
       tough-cookie ">=2.3.3"
   
-  request@^2.72.0, request@^2.83.0:
+  request@^2.83.0, request@^2.87.0:
     version "2.87.0"
     resolved "https://registry.yarnpkg.com/request/-/request-2.87.0.tgz#32f00235cd08d482b4d0d68db93a829c0ed5756e"
     dependencies:

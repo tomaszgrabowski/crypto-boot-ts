@@ -16,6 +16,8 @@ import PriceCheckCommandHandler from "./commandHandlers/PriceCheckCommandHandler
 import CommandHandler from "./commandHandlers/CommandHandler";
 import CommandParserError from "./CommandParserError";
 import * as _ from 'lodash';
+import WrongFormatCommandHandler from "./commandHandlers/WrongFormatCommandHandler";
+import UnknownCommandHandler from "./commandHandlers/UnknownCommandHandler";
 
 export default class Factory implements IFactory {
     createCommunicationService(): ICommunicationService {
@@ -25,33 +27,23 @@ export default class Factory implements IFactory {
         return new FBMessageParser
     }
     createCommandHandler(messageText: string): CommandHandler {
-
+        //todo: refactor!!!
         for (let enumMember in Command) {
             if (isNaN(Number(enumMember))) {
                 if (messageText.indexOf(enumMember) != -1) {
-
                     if (_.startsWith(messageText, enumMember)) {
-                        //witch enum?
-                        if(enumMember === Command[Command["Price check"]])
-                        return new PriceCheckCommandHandler();
-                        break;
+                        if (enumMember === Command[Command["Price check"]]) {
+                            return new PriceCheckCommandHandler();
+                        }
                     } else {
-                        //WrongFormatCommandHandler
-                        //wrapper.command = null;
-                        //wrapper.error = CommandParserError["Wrong message format, please type 'help' for more infromation..."]
-                        break;
+                        return new WrongFormatCommandHandler();
                     }
                 }
                 else {
-                    //UnknownCommandHandler
-                    //wrapper.command = null;
-                    //wrapper.error = CommandParserError["Unknown command, please type 'help' for more infromation..."]
-                    break;
+                    return new UnknownCommandHandler();
                 }
-
             }
         }
-        return null;
     }
     createSourceValidator(): IRequestSourceValidator {
         return new RequestSourceValidator()
