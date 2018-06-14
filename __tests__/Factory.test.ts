@@ -11,6 +11,7 @@ import CommandWraper from "../src/CommandWrapper";
 import PriceCheckCommandHandler from "../src/commandHandlers/PriceCheckCommandHandler";
 import WrongFormatCommandHandler from "../src/commandHandlers/WrongFormatCommandHandler";
 import UnknownCommandHandler from "../src/commandHandlers/UnknownCommandHandler";
+import Axios , {AxiosInstance} from "axios";
 
 describe('Factory', () => {
     let factory: IFactory;
@@ -79,6 +80,12 @@ describe('Factory', () => {
         const text = 'blah blah';
         const handler = factory.createCommandHandler(text);
         expect(handler).toBeInstanceOf(UnknownCommandHandler);
+    });
+
+    test('createAxiosInstance_WhenCalled_ShouldReturnAxiosInstance', () => {
+        const axios = factory.createAxiosInstance();
+        expect(axios).not.toBeNull();
+        //expect(axios).toBeInstanceOf(AxiosInstance);
     });
 
 })

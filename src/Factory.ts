@@ -11,15 +11,17 @@ import Command from "./Command";
 import ICommunicationService from "./interfaces/ICommunicationService";
 import CommunicationService from "./CommunicationService";
 import FBMessageParser from "./FBMessageParser";
-import CommandWraper from "./CommandWrapper";
 import PriceCheckCommandHandler from "./commandHandlers/PriceCheckCommandHandler";
 import CommandHandler from "./commandHandlers/CommandHandler";
-import CommandParserError from "./CommandParserError";
 import * as _ from 'lodash';
 import WrongFormatCommandHandler from "./commandHandlers/WrongFormatCommandHandler";
 import UnknownCommandHandler from "./commandHandlers/UnknownCommandHandler";
+import Axios, { AxiosInstance } from "axios";
 
 export default class Factory implements IFactory {
+    createAxiosInstance(): AxiosInstance {
+        return Axios;
+    }
     createCommunicationService(): ICommunicationService {
         return new CommunicationService(this);
     }
@@ -60,4 +62,6 @@ export default class Factory implements IFactory {
     createExpressRouter(): express.Router {
         return express.Router();
     }
+
+
 }

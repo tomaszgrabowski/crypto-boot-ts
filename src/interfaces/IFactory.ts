@@ -7,6 +7,7 @@ import Command from "../Command";
 import ICommunicationService from "./ICommunicationService";
 import CommandWrapper from "../CommandWrapper";
 import CommandHandler from "../commandHandlers/CommandHandler";
+import { AxiosInstance } from "axios";
 
 export default interface IFactory{
     createFBQueryParser(): IFBQueryParser;
@@ -17,4 +18,5 @@ export default interface IFactory{
     createFBMessageParser(): IFBMessageParser;
     createCommandHandler(messageText: string): CommandHandler;
     createCommunicationService(): ICommunicationService;
+    createAxiosInstance(): AxiosInstance;
 }
