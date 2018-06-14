@@ -1,9 +1,17 @@
-import ICommandHandler from "../interfaces/ICommandHandler";
 import CommandHandler from "./CommandHandler";
-import { Message } from "../models/requestbody";
+import { HandlerResponse } from "../models/requestbody";
+import CommandParserError from "../CommandParserError";
+import { AxiosInstance } from "axios";
 
 export default class WrongFormatCommandHandler extends CommandHandler {
-    respond(sender_psid: string, received_message: Message): void {
-        throw new Error("Method not implemented.");
+    constructor(protected axios: AxiosInstance) {
+        super(axios);
+    }
+    respond(sender_psid: string, received_message: string): void {
+        const text = CommandParserError[CommandParserError["Wrong message format, please type 'help' for more infromation..."]];
+        const response: HandlerResponse = {
+            text
+        };
+        this.SendMessage(sender_psid, response);
     }
 }

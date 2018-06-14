@@ -6,5 +6,6 @@
         "watch": true,
         "outDir": "./public/",
         "noImplicitAny": true,
+        "noEmitOnError": true
     }
 }
