@@ -37,7 +37,7 @@ describe('UnknownCommandHandler', () => {
         expect(handler).not.toBeNull();
     });
 
-    test('Respond_WhenCalled_ShouldCallRequestWithUnknowCommandResponse', () => {
+    test('Respond_WhenCalled_ShouldCalAxiosWithUnknowCommandResponse', () => {
 
         //console.error(,requestBody);
         handler.respond("test", "test");

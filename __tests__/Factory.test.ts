@@ -12,6 +12,7 @@ import PriceCheckCommandHandler from "../src/commandHandlers/PriceCheckCommandHa
 import WrongFormatCommandHandler from "../src/commandHandlers/WrongFormatCommandHandler";
 import UnknownCommandHandler from "../src/commandHandlers/UnknownCommandHandler";
 import Axios , {AxiosInstance} from "axios";
+import CoinApi from "../src/CoinApi";
 
 describe('Factory', () => {
     let factory: IFactory;
@@ -86,6 +87,12 @@ describe('Factory', () => {
         const axios = factory.createAxiosInstance();
         expect(axios).not.toBeNull();
         //expect(axios).toBeInstanceOf(AxiosInstance);
+    });
+
+    test('createCoinApi_WhenCalled_ShouldReturnCoinApiInstance', () => {
+        const coinApi = factory.createCoinApi();
+        expect(coinApi).not.toBeNull();
+        expect(coinApi).toBeInstanceOf(CoinApi);
     });
 
 })

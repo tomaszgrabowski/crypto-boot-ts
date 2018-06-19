@@ -6,6 +6,9 @@
         "watch": true,
         "outDir": "./public/",
         "noImplicitAny": true,
-        "noEmitOnError": true
+        "noEmitOnError": true,
+        "lib": [
+            "es2015"
+        ]
     }
 }

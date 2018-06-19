@@ -21,7 +21,7 @@ export default class CommunicationService implements ICommunicationService {
             const parser = this.factory.createFBMessageParser()
             //const command: CommandWrapper = parser.parse(message.text);
             const commmandHandler: CommandHandler = this.factory.createCommandHandler(message.text);
-            commmandHandler.respond(senderId, message);
+            commmandHandler.respond(senderId, message.text);
         });
 
     }

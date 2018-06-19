@@ -17,6 +17,8 @@ import * as _ from 'lodash';
 import WrongFormatCommandHandler from "./commandHandlers/WrongFormatCommandHandler";
 import UnknownCommandHandler from "./commandHandlers/UnknownCommandHandler";
 import Axios, { AxiosInstance } from "axios";
+import ICoinApi from "./interfaces/ICoinApi";
+import CoinApi from "./CoinApi";
 
 export default class Factory implements IFactory {
     createAxiosInstance(): AxiosInstance {
@@ -35,14 +37,14 @@ export default class Factory implements IFactory {
                 if (messageText.indexOf(enumMember) != -1) {
                     if (_.startsWith(messageText, enumMember)) {
                         if (enumMember === Command[Command["Price check"]]) {
-                            return new PriceCheckCommandHandler();
+                            return new PriceCheckCommandHandler(this.createAxiosInstance(), this.createCoinApi());
                         }
                     } else {
-                        return new WrongFormatCommandHandler();
+                        return new WrongFormatCommandHandler(this.createAxiosInstance());
                     }
                 }
                 else {
-                    return new UnknownCommandHandler();
+                    return new UnknownCommandHandler(this.createAxiosInstance());
                 }
             }
         }
@@ -61,6 +63,10 @@ export default class Factory implements IFactory {
     }
     createExpressRouter(): express.Router {
         return express.Router();
+    }
+
+    createCoinApi(): ICoinApi{
+        return new CoinApi(this.createAxiosInstance());
     }
 
 

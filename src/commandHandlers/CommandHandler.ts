@@ -15,35 +15,18 @@ export default abstract class CommandHandler {
     }
 
     protected SendMessage(sender_psid: string, response: HandlerResponse) {
-        const request_body = {
-            "recipient": {
-                "id": sender_psid
-            },
-            "message": response
-        };
         const data = {
-            qs:{ "access_token": this.PAGE_ACCESS_TOKEN },
-            json: request_body
+            qs: { "access_token": this.PAGE_ACCESS_TOKEN },
+            json: {
+                "recipient": {
+                    "id": sender_psid
+                },
+                "message": response
+            }
         };
-        //console.log(data);
         this.axios.post('https://graph.facebook.com/v2.6/me/messages',
             data
-        ).catch((err)=>{
-            console.error("Unable to send message:" + err);
-        })
-
-
-        // request({
-        //     "uri": "https://graph.facebook.com/v2.6/me/messages",
-        //     "qs": { "access_token": this.PAGE_ACCESS_TOKEN },
-        //     "method": "POST",
-        //     "json": request_body
-        // }, (err, res, body) => {
-        //     if (!err) {
-        //     } else {
-        //         console.error("Unable to send message:" + err);
-        //     }
-        // });
+        )
     }
 
 

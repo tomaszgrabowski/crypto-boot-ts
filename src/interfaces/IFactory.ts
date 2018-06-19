@@ -8,6 +8,7 @@ import ICommunicationService from "./ICommunicationService";
 import CommandWrapper from "../CommandWrapper";
 import CommandHandler from "../commandHandlers/CommandHandler";
 import { AxiosInstance } from "axios";
+import ICoinApi from "./ICoinApi";
 
 export default interface IFactory{
     createFBQueryParser(): IFBQueryParser;
@@ -19,4 +20,5 @@ export default interface IFactory{
     createCommandHandler(messageText: string): CommandHandler;
     createCommunicationService(): ICommunicationService;
     createAxiosInstance(): AxiosInstance;
+    createCoinApi(): ICoinApi;
 }
