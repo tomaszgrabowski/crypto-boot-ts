@@ -10,9 +10,9 @@ export default class PriceCheckCommandHandler extends CommandHandler {
         super(axios);
     }
 
-    respond(sender_psid: string, received_message: string): void {
+    async respond(sender_psid: string, received_message: string): Promise<void> {
 
-        const coin: Coin = this.api.getByName(received_message);
+        const coin: Coin = await this.api.getByName(received_message);
         const response: HandlerResponse = {
             text: `${coin.name} price is : ${coin.price}`
         }
