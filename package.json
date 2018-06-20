@@ -1,11 +1,11 @@
 {
   "name": "CryptoBoot-ts",
   "version": "1.0.0",
-  "main": "public/index.js",
+  "main": "server/server.js",
   "author": "Tomasz Grabowski",
   "license": "MIT",
   "scripts": {
-    "start": "node ./public/index.js",
+    "start": "node ./server/server.js",
     "nodemon": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
     "test": "jest --watchAll --coverage",
     "build:dev": "webpack",
