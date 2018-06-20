@@ -13,7 +13,7 @@ import CommunicationService from "./CommunicationService";
 export default class Bootstrap {
 
   private factory: IFactory;
-  private port: number | string = process.env.PORT;
+  private port: any = process.env.PORT || 3000;
   private app: express.Application;
   private router: express.Router;
   private verifier: IFBVerifier;
@@ -35,7 +35,7 @@ export default class Bootstrap {
 
     this.app.use(this.router);
 
-    this.app.listen(this.port, () => {
+    this.app.listen(process.env.PORT || 3000, () => {
 
       console.log(`${SystemMessages.init}: ${this.port}`);
 
