@@ -8,6 +8,7 @@ import ICommunicationService from "./interfaces/ICommunicationService";
 import Factory from "./Factory";
 import IRequestSourceValidator from "./interfaces/IRequestSourceValidator";
 import CommunicationService from "./CommunicationService";
+import * as bodyParser from 'body-parser';
 
 
 export default class Bootstrap {
@@ -34,7 +35,7 @@ export default class Bootstrap {
   run(): void {
 
     this.app.use(this.router);
-
+    this.app.use(bodyParser);
     this.app.listen(this.port, () => {
 
       console.log(`${SystemMessages.init}: ${this.port}`);
