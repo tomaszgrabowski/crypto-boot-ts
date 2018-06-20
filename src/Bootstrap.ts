@@ -8,7 +8,7 @@ import ICommunicationService from "./interfaces/ICommunicationService";
 import Factory from "./Factory";
 import IRequestSourceValidator from "./interfaces/IRequestSourceValidator";
 import CommunicationService from "./CommunicationService";
-var bodyParser = require('body-parser');
+import * as bodyParser from 'body-parser';
 
 
 export default class Bootstrap {
@@ -33,9 +33,10 @@ export default class Bootstrap {
   }
 
   run(): void {
-
-    this.app.use(this.router);
     this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(this.router);
+
     this.app.listen(this.port, () => {
 
       console.log(`${SystemMessages.init}: ${this.port}`);
@@ -58,7 +59,7 @@ export default class Bootstrap {
 
       this.router.post('/', (req: express.Request, res: express.Response) => {
         console.log(SystemMessages.messageRecived);
-        if(!this.sourceValidator.validate(req)){
+        if (!this.sourceValidator.validate(req)) {
           console.log(SystemMessages.unknownSource);
           res.sendStatus(404);
           return;
