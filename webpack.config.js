@@ -4,8 +4,8 @@ module.exports = function (env) {
     return {
         entry: './src/index.ts',
         output: {
-            path: path.join(__dirname, 'public'),
-            filename: './server/server.js'
+            path: path.join(__dirname, 'server'),
+            filename: 'server.js'
         },
         resolve: {
             extensions: ['.ts', '.tsx', '.js']
