@@ -24,11 +24,23 @@ export default abstract class CommandHandler {
                 "message": response
             }
         };
-        this.axios.post('https://graph.facebook.com/v2.6/me/messages',
-            data
-        ).catch((err)=>{
-            console.log(err);
-        })
+        // this.axios.post('https://graph.facebook.com/v2.6/me/messages',
+        //     data
+        // ).catch((err)=>{
+        //     console.log(err);
+        // })
+        request({
+            "uri": "https://graph.facebook.com/v2.6/me/messages",
+            "qs": { "access_token": this.PAGE_ACCESS_TOKEN },
+            "method": "POST",
+            "json": data.json
+        }, (err, res, body) => {
+            if (!err) {
+                console.log('message sent!')
+            } else {
+                console.error("Unable to send message:" + err);
+            }
+        });
     }
 
 
