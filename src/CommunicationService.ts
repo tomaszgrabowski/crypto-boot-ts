@@ -18,8 +18,6 @@ export default class CommunicationService implements ICommunicationService {
         req.body.entry.forEach((entry: Entry) => {
             const message: Message = entry.messaging[0].message;
             const senderId: string = entry.messaging[0].sender.id;
-            const parser = this.factory.createFBMessageParser()
-            //const command: CommandWrapper = parser.parse(message.text);
             const commmandHandler: CommandHandler = this.factory.createCommandHandler(message.text);
             commmandHandler.respond(senderId, message.text);
         });

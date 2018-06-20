@@ -12,16 +12,14 @@ export default class PriceCheckCommandHandler extends CommandHandler {
 
     async respond(sender_psid: string, received_message: string): Promise<void> {
 
-        this.api.getByName(received_message).then((coin)=>{
+        this.api.getByName(received_message).then((coin:Coin)=>{
+
             const response: HandlerResponse = {
                 text: `${coin.name} price is : ${coin.price} $, change on last 24h : ${coin.change} %`
             }
+            console.log(response);
             this.SendMessage(sender_psid, response);
         });
 
-    }
-
-    getCoinName(message: string): string{
-        return message.substr(12,message.length);
     }
 }

@@ -45,11 +45,6 @@ describe('PriceCheckCommandHandler', () => {
 
     });
 
-    test('GetCoinName_WhanCalled_ShouldReturnCoinName', ()=>{
-        const message = 'Price check BTC';
-        expect(handler.getCoinName(message)).toEqual('BTC');
-    })
-
     // test('Respond_WhenCalledShouldRepondWithProperText', () => {
     //     axiosPromise.setup(x => x.catch(It.IsAny())).returns(null);
     //     axiosMock.setup(x => x.post(It.IsAny(), It.IsAny())).returns(axiosPromise.object());

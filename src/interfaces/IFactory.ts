@@ -16,7 +16,6 @@ export default interface IFactory{
     createExpressApp():express.Application;
     createExpressRouter():express.Router;
     createSourceValidator(): IRequestSourceValidator;
-    createFBMessageParser(): IFBMessageParser;
     createCommandHandler(messageText: string): CommandHandler;
     createCommunicationService(): ICommunicationService;
     createAxiosInstance(): AxiosInstance;

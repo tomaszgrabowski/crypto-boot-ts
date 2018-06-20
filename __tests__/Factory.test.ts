@@ -5,7 +5,6 @@ import FBVerifier from "../src/FBVerifier";
 import * as express from 'express';
 import RequestSourceValidator from "../src/RequestSourceValidator";
 import CommunicationService from "../src/CommunicationService";
-import FBMessageParser from "../src/FBMessageParser";
 import Command from "../src/Command";
 import CommandWraper from "../src/CommandWrapper";
 import PriceCheckCommandHandler from "../src/commandHandlers/PriceCheckCommandHandler";
@@ -59,12 +58,6 @@ describe('Factory', () => {
         const commService = factory.createCommunicationService()
         expect(commService).not.toBeNull;
         expect(commService).toBeInstanceOf(CommunicationService);
-    });
-
-    test('createExpressRouter_WhenCalled_ShouldCreateFBMessageParserObject', () => {
-        const parser = factory.createFBMessageParser()
-        expect(parser).not.toBeNull;
-        expect(parser).toBeInstanceOf(FBMessageParser);
     });
 
     test('createCommandHandler_WhenCalledWithStringStartsWithCommandPriceCheck_ShouldRetutnPriceCheckCommandHandler', () => {

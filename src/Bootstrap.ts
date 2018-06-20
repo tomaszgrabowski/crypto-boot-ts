@@ -2,12 +2,9 @@ import * as express from "express";
 import IFBVerifier from "./interfaces/IFBVerifier";
 import IFactory from "./interfaces/IFactory";
 import SystemMessages from "./SystemMessages";
-import FBQueryParser from "./FBQueryParser";
-import IFBQueryParser from "./interfaces/IFBQueryParser";
 import ICommunicationService from "./interfaces/ICommunicationService";
 import Factory from "./Factory";
 import IRequestSourceValidator from "./interfaces/IRequestSourceValidator";
-import CommunicationService from "./CommunicationService";
 import * as bodyParser from 'body-parser';
 
 
@@ -41,7 +38,7 @@ export default class Bootstrap {
 
       console.log(`${SystemMessages.init}: ${this.port}`);
 
-      this.router.get('/privacy', (req: express.Request, res: express.Response) => {
+      this.router.get('/privacy', (res: express.Response) => {
         res.json("privacy");
       });
 

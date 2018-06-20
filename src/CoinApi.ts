@@ -22,10 +22,10 @@ export default class CoinApi implements ICoinApi {
             let url = this.detailsUrl + coin.id;
             return this.axios.get(url).then((response: any) => {
                 let coinDetail = response.data.data;
-                let _coin: any = {
+                let _coin: Coin = {
                     name: coinDetail.name,
                     price: coinDetail.quotes.USD.price,
-                    chanage24: coinDetail.quotes.USD.percent_change_24h,
+                    change: coinDetail.quotes.USD.percent_change_24h,
                 }
                 return _coin;
             });

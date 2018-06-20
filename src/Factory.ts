@@ -6,11 +6,9 @@ import FBQueryParser from "./FBQueryParser";
 import FBVerifier from "./FBVerifier";
 import RequestSourceValidator from "./RequestSourceValidator";
 import IRequestSourceValidator from "./interfaces/IRequestSourceValidator";
-import IFBMessageParser from "./interfaces/IFBMessageParser";
 import Command from "./Command";
 import ICommunicationService from "./interfaces/ICommunicationService";
 import CommunicationService from "./CommunicationService";
-import FBMessageParser from "./FBMessageParser";
 import PriceCheckCommandHandler from "./commandHandlers/PriceCheckCommandHandler";
 import CommandHandler from "./commandHandlers/CommandHandler";
 import * as _ from 'lodash';
@@ -26,9 +24,6 @@ export default class Factory implements IFactory {
     }
     createCommunicationService(): ICommunicationService {
         return new CommunicationService(this);
-    }
-    createFBMessageParser(): IFBMessageParser {
-        return new FBMessageParser
     }
     createCommandHandler(messageText: string): CommandHandler {
         //todo: refactor!!!
