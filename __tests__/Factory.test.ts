@@ -72,6 +72,12 @@ describe('Factory', () => {
         const handler = factory.createCommandHandler(text);
         expect(handler).toBeInstanceOf(PriceCheckCommandHandler);
     });
+
+    test('createCommandHandler_WhenCalledWithStringStartsWithCommandPriceCheckLowerCase_ShouldRetutnPriceCheckCommandHandler', () => {
+        const text = 'price Check BtC';
+        const handler = factory.createCommandHandler(text);
+        expect(handler).toBeInstanceOf(PriceCheckCommandHandler);
+    });
     test('createCommandHandler_WhenCalledWithStringNotStartingWithCommandText_ShouldRetutnWrongFormatCommandHandler', () => {
         const text = 'blah blah Price check BTC';
         const handler = factory.createCommandHandler(text);

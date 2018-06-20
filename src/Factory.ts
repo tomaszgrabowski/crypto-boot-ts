@@ -32,11 +32,13 @@ export default class Factory implements IFactory {
     }
     createCommandHandler(messageText: string): CommandHandler {
         //todo: refactor!!!
+        messageText = messageText.toLowerCase();
         for (let enumMember in Command) {
+            enumMember = enumMember.toLowerCase();
             if (isNaN(Number(enumMember))) {
                 if (messageText.indexOf(enumMember) != -1) {
                     if (_.startsWith(messageText, enumMember)) {
-                        if (enumMember === Command[Command["Price check"]]) {
+                        if (enumMember === (Command[Command["Price check"]]).toLowerCase()) {
                             return new PriceCheckCommandHandler(this.createAxiosInstance(), this.createCoinApi());
                         }
                     } else {
