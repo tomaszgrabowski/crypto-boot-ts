@@ -24,8 +24,6 @@ describe('CommunicationService', () => {
         res: Mock<express.Response>;
 
     beforeEach(() => {
-        parser = new Mock<IFBMessageParser>();
-        parser.setup(x => x.parse(It.IsAny())).returns(Command["Price check"]);
 
         commandHandler = new Mock<PriceCheckCommandHandler>();
         commandHandler.setup(x => x.respond(It.IsAny(), It.IsAny())).returns(null);
@@ -35,7 +33,7 @@ describe('CommunicationService', () => {
 
         factory = new Mock<IFactory>();
         factory.setup(x => x.createCommandHandler(It.IsAny())).returns(commandHandler.object());
-        factory.setup(x => x.createFBMessageParser()).returns(parser.object());
+
 
         service = new CommunicationService(factory.object());
         body = reqBodyFixture;

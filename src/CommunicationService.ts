@@ -1,10 +1,7 @@
 import ICommunicationService from "./interfaces/ICommunicationService";
 import * as express from "express";
-import { RequestBody, Entry, Message } from "./models/requestbody";
-import IFBMessageParser from "./interfaces/IFBMessageParser";
-import Command from "./Command";
+import { Entry, Message } from "./models/requestbody";
 import IFactory from "./interfaces/IFactory";
-import CommandWrapper from "./CommandWrapper";
 import CommandHandler from "./commandHandlers/CommandHandler";
 
 
@@ -14,7 +11,7 @@ export default class CommunicationService implements ICommunicationService {
 
     }
 
-    processRequest(req: express.Request, res: express.Response): void {
+    processRequest(req: express.Request): void {
         req.body.entry.forEach((entry: Entry) => {
             const message: Message = entry.messaging[0].message;
             const senderId: string = entry.messaging[0].sender.id;
