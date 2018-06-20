@@ -22,7 +22,7 @@ export default class Bootstrap {
   private communicationService: ICommunicationService;
 
   constructor() {
-    this.accessToken = process.env.PAGE_ACCESS_TOKEN
+    this.accessToken = process.env.verifyToken;
     this.factory = new Factory();
     this.app = this.factory.createExpressApp();
     this.router = this.factory.createExpressRouter();
