@@ -22,7 +22,7 @@ export default class Bootstrap {
   private communicationService: ICommunicationService;
 
   constructor() {
-    this.accessToken = process.env.verifyToken;
+    this.accessToken = process.env.verifyToken || "anna";
     this.factory = new Factory();
     this.app = this.factory.createExpressApp();
     this.router = this.factory.createExpressRouter();
@@ -47,7 +47,7 @@ export default class Bootstrap {
         console.log(SystemMessages.verification);
         if (this.verifier.verify(req)) {
           console.log(SystemMessages.verificationSuccess);
-          res.status(200).send(req.body['hub.challenge']);
+          res.status(200).send(req.query['hub.challenge']);
         }
         else {
           console.log(SystemMessages.verificationFail);
