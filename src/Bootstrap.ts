@@ -13,7 +13,7 @@ import CommunicationService from "./CommunicationService";
 export default class Bootstrap {
 
   private factory: IFactory;
-  private port: number | string = 3000;
+  private port: number | string = process.env.PORT || 3000;
   private app: express.Application;
   private router: express.Router;
   private verifier: IFBVerifier;
