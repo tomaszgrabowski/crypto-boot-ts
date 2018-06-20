@@ -5,7 +5,7 @@
   "author": "Tomasz Grabowski",
   "license": "MIT",
   "scripts": {
-    "start": "node public/index.js",
+    "start": "node ./public/index.js",
     "nodemon": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
     "test": "jest --watchAll --coverage",
     "build:dev": "webpack",
