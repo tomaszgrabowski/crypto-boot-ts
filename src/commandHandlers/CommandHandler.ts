@@ -26,7 +26,9 @@ export default abstract class CommandHandler {
         };
         this.axios.post('https://graph.facebook.com/v2.6/me/messages',
             data
-        )
+        ).catch((err)=>{
+            console.log(err);
+        })
     }
 
 

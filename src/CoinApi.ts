@@ -11,20 +11,25 @@ export default class CoinApi implements ICoinApi {
     }
 
     async getByName(message: string) : Promise<Coin>{
-        let coin = await this.axios.get(this.listUrl).then((response) => {
-            return response.data.data.find((item:any) => {
-                return item.symbol === message;
+
+        message = message.substring(12, message.length).trim().toUpperCase();
+
+        return this.axios.get(this.listUrl).then((response) => {
+
+            let coin = response.data.data.find((coin:any) => {
+                return coin.symbol == message.toUpperCase();
+            });
+            let url = this.detailsUrl + coin.id;
+            return this.axios.get(url).then((response: any) => {
+                let coinDetail = response.data.data;
+                let _coin: any = {
+                    name: coinDetail.name,
+                    price: coinDetail.quotes.USD.price,
+                    chanage24: coinDetail.quotes.USD.percent_change_24h,
+                }
+                return _coin;
             });
         });
-        let url = this.detailsUrl + coin.id;
-        let coinDetails = await this.axios.get(url).then((response) => {
-            return response.data.data;
-        });
-        let _coin:any = {
-            name: coinDetails.name,
-            price:coinDetails.quotes.USD.price,
-            chanage24:coinDetails.quotes.USD.percent_change_24h,
-        }
-        return _coin;
+
     }
 }
