@@ -16,13 +16,10 @@ export default class CoinApi implements ICoinApi {
                 return item.symbol === message;
             });
         });
-        console.log(coin);
         let url = this.detailsUrl + coin.id;
-        console.log(url);
         let coinDetails = await this.axios.get(url).then((response) => {
             return response.data.data;
         });
-        console.log(coinDetails);
         let _coin:any = {
             name: coinDetails.name,
             price:coinDetails.quotes.USD.price,
