@@ -32,7 +32,7 @@ export default class Bootstrap {
   }
 
   run(): void {
-
+    console.log(process.env.PORT);
     this.app.use(this.router);
 
     this.app.listen(process.env.PORT || 3000, () => {
