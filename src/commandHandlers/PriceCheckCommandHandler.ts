@@ -17,7 +17,7 @@ export default class PriceCheckCommandHandler extends CommandHandler {
                 text: "Sorry, I wasn't able to find this coin..."
             };
             if (coin) {
-                const response: HandlerResponse = {
+                response = {
                     text: `${coin.name} price is : ${coin.price} $, change on last 24h : ${coin.change} %`
                 }
             }
