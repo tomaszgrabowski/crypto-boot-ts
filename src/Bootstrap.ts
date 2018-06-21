@@ -6,6 +6,7 @@ import ICommunicationService from "./interfaces/ICommunicationService";
 import Factory from "./Factory";
 import IRequestSourceValidator from "./interfaces/IRequestSourceValidator";
 import * as bodyParser from 'body-parser';
+import * as path from "path";
 
 
 export default class Bootstrap {
@@ -38,8 +39,8 @@ export default class Bootstrap {
 
       console.log(`${SystemMessages.init}: ${this.port}`);
 
-      this.router.get('/privacy', (res: express.Response) => {
-        res.json("privacy");
+      this.router.get('/privacy', (req:any, res: express.Response) => {
+        res.sendFile('privacy_policy.html', {root: path.join(process.cwd(), '/static')});
       });
 
       this.router.get('/', (req: express.Request, res: express.Response) => {
