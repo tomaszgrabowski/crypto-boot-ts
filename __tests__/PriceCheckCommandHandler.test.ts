@@ -2,25 +2,26 @@ import PriceCheckCommandHandler from "../src/commandHandlers/PriceCheckCommandHa
 import Axios, { AxiosInstance, AxiosPromise } from "axios";
 import { Mock, IMock, It, Times } from "moq.ts";
 import ICoinApi from "../src/interfaces/ICoinApi";
-import CommandHandler from "../src/commandHandlers/CommandHandler";
-import { Coin } from "../src/models/Coin";
+import IRequestSender from "../src/interfaces/IRequestSender";
+import Is from "../tools/Is";
+
+
 
 describe('PriceCheckCommandHandler', () => {
 
     let coinApiMock: IMock<ICoinApi>;
-    let handler: PriceCheckCommandHandler
-    let axiosMock: Mock<AxiosInstance>;
-    let axiosPromise: Mock<AxiosPromise>;
+    let handler: PriceCheckCommandHandler;
+    let requestSender: Mock<IRequestSender>;
 
     beforeEach(() => {
-        axiosMock = new Mock<AxiosInstance>();
-        axiosPromise = new Mock<AxiosPromise>();
+        requestSender = new Mock<IRequestSender>();
         coinApiMock = new Mock<ICoinApi>();
-        handler = new PriceCheckCommandHandler(axiosMock.object(), coinApiMock.object());
+        handler = new PriceCheckCommandHandler(requestSender.object(), coinApiMock.object());
         coinApiMock.setup(x => x.getByName(It.IsAny())).returns({
             name: 'BTC',
             price: 1000
         });
+        requestSender.setup(x => x.Send(It.IsAny()));
     });
 
     test('Contructor_WhenCalled_ShouldCreateAnObject', () => {
@@ -31,43 +32,47 @@ describe('PriceCheckCommandHandler', () => {
 
     test('Respond_WhenCalled_ShouldCallCoinApiGet', () => {
 
-        const handler = new PriceCheckCommandHandler(Axios, coinApiMock.object());
+        const handler = new PriceCheckCommandHandler(requestSender.object(), coinApiMock.object());
         handler.respond("test", "Price check BTC")
         coinApiMock.verify(x => x.getByName(It.IsAny()), Times.Once());
     });
 
-    test('Respond_WhenCalled_ShouldSendMessageBackToUser', () => {
-        axiosPromise.setup(x => x.catch(It.IsAny())).returns(null);
-        axiosMock.setup(x => x.post(It.IsAny(), It.IsAny())).returns(axiosPromise.object());
-        handler.respond("test", "test").then(()=>{
-            axiosMock.verify(x => x.post("https://graph.facebook.com/v2.6/me/messages", It.IsAny()), Times.Once());
-        });
+    test('Respond_WhenCalledWithExistingCoin_ShouldSendCoinDetails', async () => {
+        coinApiMock.setup(x => x.getByName(It.IsAny())).returns(Promise.resolve({
+            name: 'Bitcoin',
+            price: 9024.09,
+            change: -4.18
+        }));
+        requestSender.setup(x => x.Send(It.IsAny()));
+        const handler = new PriceCheckCommandHandler(requestSender.object(),
+            coinApiMock.object());
+        await handler.respond("test", "price check btc");
+        requestSender.verify(x=>x.Send(
+            Is.Eq({ uri: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: { access_token: 'testtoken' },
+            method: 'POST',
+            json:
+             { recipient: { id: 'test' },
+               message:
+                { text: 'Bitcoin price is : 9024.09 $, change on last 24h : -4.18 %' } } })
+        ), Times.Once());
     });
 
-    test('Respond_WhenCalledWithExistingCoin_ShouldSendCoinDetails');
-
-    test('Respond_WhenCalledWithNonExistingCoin_ShouldSendSorryText');
-
-
-    // test('Respond_WhenCalledShouldRepondWithProperText', () => {
-    //     axiosPromise.setup(x => x.catch(It.IsAny())).returns(null);
-    //     axiosMock.setup(x => x.post(It.IsAny(), It.IsAny())).returns(axiosPromise.object());
-    //     handler.respond('test', 'test');
-    //     coinApiMock.setup(x => x.getByName(It.IsAny())).returns({
-    //         name: "BTC",
-    //         price: 1000
-    //     });
-    //     const data = {
-    //         qs: { "access_token": "testtoken" },
-    //         json: {
-    //             "recipient": {
-    //                 "id": "test"
-    //             },
-    //             "message": "BTC price is : 1000"
-    //         }
-    //     };
-    //     axiosMock.verify(x => x.post("https://graph.facebook.com/v2.6/me/messages", data), Times.Once());
-    // })
-
-
+    test('Respond_WhenCalledWithNonExistingCoin_ShouldSendSorryText',async ()=>{
+        coinApiMock.setup(x => x.getByName(It.IsAny())).returns(Promise.resolve(null));
+        requestSender.setup(x => x.Send(It.IsAny()));
+        const handler = new PriceCheckCommandHandler(requestSender.object(),
+            coinApiMock.object());
+        await handler.respond("test", "price check btcc");
+        requestSender.verify(x=>x.Send(
+            Is.Eq({ uri: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: { access_token: 'testtoken' },
+            method: 'POST',
+            json:
+             { recipient: { id: 'test' },
+               message:
+                { text: "Sorry, I wasn't able to find this coin..." } } })
+        ), Times.Once());
+    });
 });
+

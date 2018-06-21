@@ -17,6 +17,8 @@ import UnknownCommandHandler from "./commandHandlers/UnknownCommandHandler";
 import Axios, { AxiosInstance } from "axios";
 import ICoinApi from "./interfaces/ICoinApi";
 import CoinApi from "./CoinApi";
+import IRequestSender from "./interfaces/IRequestSender";
+import RequestSender from "./RequestSender";
 
 export default class Factory implements IFactory {
     createAxiosInstance(): AxiosInstance {
@@ -34,14 +36,14 @@ export default class Factory implements IFactory {
                 if (messageText.indexOf(enumMember) != -1) {
                     if (_.startsWith(messageText, enumMember)) {
                         if (enumMember === (Command[Command["Price check"]]).toLowerCase()) {
-                            return new PriceCheckCommandHandler(this.createAxiosInstance(), this.createCoinApi());
+                            return new PriceCheckCommandHandler(this.createIRequestSender(), this.createCoinApi());
                         }
                     } else {
-                        return new WrongFormatCommandHandler(this.createAxiosInstance());
+                        return new WrongFormatCommandHandler(this.createIRequestSender());
                     }
                 }
                 else {
-                    return new UnknownCommandHandler(this.createAxiosInstance());
+                    return new UnknownCommandHandler(this.createIRequestSender());
                 }
             }
         }
@@ -64,6 +66,10 @@ export default class Factory implements IFactory {
 
     createCoinApi(): ICoinApi{
         return new CoinApi(this.createAxiosInstance());
+    }
+
+    createIRequestSender():IRequestSender{
+        return new RequestSender();
     }
 
 

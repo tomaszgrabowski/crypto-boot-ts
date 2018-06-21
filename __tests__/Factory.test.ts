@@ -12,6 +12,7 @@ import WrongFormatCommandHandler from "../src/commandHandlers/WrongFormatCommand
 import UnknownCommandHandler from "../src/commandHandlers/UnknownCommandHandler";
 import Axios , {AxiosInstance} from "axios";
 import CoinApi from "../src/CoinApi";
+import RequestSender from "../src/RequestSender";
 
 describe('Factory', () => {
     let factory: IFactory;
@@ -92,6 +93,12 @@ describe('Factory', () => {
         const coinApi = factory.createCoinApi();
         expect(coinApi).not.toBeNull();
         expect(coinApi).toBeInstanceOf(CoinApi);
+    });
+
+    test('createRequestSender_whenCalled_SHouldReturnRequestSenderInstance', ()=>{
+        const sender = factory.createIRequestSender();
+        expect(sender).not.toBeNull();
+        expect(sender).toBeInstanceOf(RequestSender);
     });
 
 })

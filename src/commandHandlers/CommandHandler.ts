@@ -2,6 +2,7 @@ import ICommandHandler from "../interfaces/ICommandHandler";
 import * as request from 'request';
 import { Message, HandlerResponse } from "../models/requestbody";
 import axios, { AxiosInstance } from 'axios';
+import IRequestSender from "../interfaces/IRequestSender";
 
 
 
@@ -11,36 +12,22 @@ export default abstract class CommandHandler {
 
     abstract respond(sender_psid: string, received_message: string): void;
 
-    constructor(protected axios: AxiosInstance) {
+    constructor(protected requestSender: IRequestSender) {
     }
 
     protected SendMessage(sender_psid: string, response: HandlerResponse) {
         const data = {
-            qs: { "access_token": this.PAGE_ACCESS_TOKEN },
-            json: {
+            "uri": "https://graph.facebook.com/v2.6/me/messages",
+            "qs": { "access_token": this.PAGE_ACCESS_TOKEN },
+            "method": "POST",
+            "json": {
                 "recipient": {
                     "id": sender_psid
                 },
                 "message": response
             }
-        };
-        // this.axios.post('https://graph.facebook.com/v2.6/me/messages',
-        //     data
-        // ).catch((err)=>{
-        //     console.log(err);
-        // })
-        request({
-            "uri": "https://graph.facebook.com/v2.6/me/messages",
-            "qs": { "access_token": this.PAGE_ACCESS_TOKEN },
-            "method": "POST",
-            "json": data.json
-        }, (err, res, body) => {
-            if (!err) {
-                console.log('message sent!')
-            } else {
-                console.error("Unable to send message:" + err);
-            }
-        });
+        }
+        this.requestSender.Send(data);
     }
 
 

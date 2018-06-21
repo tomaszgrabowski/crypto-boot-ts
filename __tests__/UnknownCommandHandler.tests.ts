@@ -4,20 +4,19 @@ import { HandlerResponse } from "../src/models/requestbody";
 import CommandParserError from "../src/CommandParserError";
 import { Mock, It, Times, IMock } from "moq.ts";
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
+import IRequestSender from "../src/interfaces/IRequestSender";
 
 
 describe('UnknownCommandHandler', () => {
     let handler: UnknownCommandHandler;
-    let axiosMock: Mock<AxiosInstance>;
+    let requestSender: Mock<IRequestSender>;
     let options: {};
     let requestBody: {};
 
     beforeEach(() => {
 
-        axiosMock = new Mock<AxiosInstance>();
-        var axiosPromise: Mock<AxiosPromise> = new Mock<AxiosPromise>();
-        axiosPromise.setup(x => x.catch(It.IsAny())).returns(null);
-        axiosMock.setup(x => x.post(It.IsAny(), It.IsAny())).returns(axiosPromise.object());
+        requestSender = new Mock<IRequestSender>();
+        requestSender.setup(x => x.Send(It.IsAny()));
         options = {
             "recipient": {
                 "id": "test"
@@ -30,17 +29,10 @@ describe('UnknownCommandHandler', () => {
             qs: { "access_token": "testtoken" },
             json: options
         }
-        handler = new UnknownCommandHandler(axiosMock.object());
+        handler = new UnknownCommandHandler(requestSender.object());
     });
 
     test('Constructor_WhenCalled_ShouldReturnObject', () => {
         expect(handler).not.toBeNull();
     });
-
-    // test('Respond_WhenCalled_ShouldCalAxiosWithUnknowCommandResponse', () => {
-
-    //     //console.error(,requestBody);
-    //     handler.respond("test", "test");
-    //     axiosMock.verify(x => x.post, Times.Once());
-    // })
 })

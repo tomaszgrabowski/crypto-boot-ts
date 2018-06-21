@@ -1,5 +1,6 @@
 node_modules/
 coverage/
 public/
+server/
 .vscode/
 pass.json

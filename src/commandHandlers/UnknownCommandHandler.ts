@@ -3,11 +3,12 @@ import { Message, HandlerResponse } from "../models/requestbody";
 import * as request from 'request';
 import CommandParserError from "../CommandParserError";
 import { AxiosInstance } from "axios";
+import IRequestSender from "../interfaces/IRequestSender";
 
 export default class UnknownCommandHandler extends CommandHandler {
 
-    constructor(protected axios: AxiosInstance) {
-        super(axios);
+    constructor(protected requestSender: IRequestSender) {
+        super(requestSender);
     }
 
     respond(sender_psid: string, received_message: string): void {
