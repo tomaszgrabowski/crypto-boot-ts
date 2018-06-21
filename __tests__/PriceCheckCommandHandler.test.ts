@@ -42,8 +42,12 @@ describe('PriceCheckCommandHandler', () => {
         handler.respond("test", "test").then(()=>{
             axiosMock.verify(x => x.post("https://graph.facebook.com/v2.6/me/messages", It.IsAny()), Times.Once());
         });
-
     });
+
+    test('Respond_WhenCalledWithExistingCoin_ShouldSendCoinDetails');
+
+    test('Respond_WhenCalledWithNonExistingCoin_ShouldSendSorryText');
+
 
     // test('Respond_WhenCalledShouldRepondWithProperText', () => {
     //     axiosPromise.setup(x => x.catch(It.IsAny())).returns(null);
