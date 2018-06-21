@@ -34,12 +34,12 @@ describe('WrongFormatCommandHandler', () => {
         expect(handler).not.toBeNull();
     });
 
-    test('Respond_WhenCalled_ShouldCallRequestWithUnknowCommandResponse', () => {
+    // test('Respond_WhenCalled_ShouldCallRequestWithUnknowCommandResponse', () => {
 
-        //console.error(,requestBody);
-        handler.respond("test", "test");
-        axiosMock.verify(x => x.post, Times.Once());
-    })
+    //     //console.error(,requestBody);
+    //     handler.respond("test", "test");
+    //     axiosMock.verify(x => x.post, Times.Once());
+    // })
 });
 
 

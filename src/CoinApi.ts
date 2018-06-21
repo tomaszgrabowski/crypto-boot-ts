@@ -19,6 +19,7 @@ export default class CoinApi implements ICoinApi {
             let coin = response.data.data.find((coin:any) => {
                 return coin.symbol == message.toUpperCase();
             });
+            if(!coin) return null;
             let url = this.detailsUrl + coin.id;
             return this.axios.get(url).then((response: any) => {
                 let coinDetail = response.data.data;
