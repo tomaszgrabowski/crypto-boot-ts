@@ -1,8 +1,6 @@
 import CommandHandler from "./CommandHandler";
 import { Message, HandlerResponse } from "../models/requestbody";
-import * as request from 'request';
 import CommandParserError from "../CommandParserError";
-import { AxiosInstance } from "axios";
 import IRequestSender from "../interfaces/IRequestSender";
 
 export default class UnknownCommandHandler extends CommandHandler {

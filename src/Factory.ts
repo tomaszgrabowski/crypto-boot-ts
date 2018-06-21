@@ -19,6 +19,7 @@ import ICoinApi from "./interfaces/ICoinApi";
 import CoinApi from "./CoinApi";
 import IRequestSender from "./interfaces/IRequestSender";
 import RequestSender from "./RequestSender";
+import HelpCommandHandler from "./commandHandlers/HelpCommandHandler";
 
 export default class Factory implements IFactory {
     createAxiosInstance(): AxiosInstance {
@@ -29,24 +30,28 @@ export default class Factory implements IFactory {
     }
     createCommandHandler(messageText: string): CommandHandler {
         //todo: refactor!!!
-        messageText = messageText.toLowerCase();
+        let handler: CommandHandler =  new UnknownCommandHandler(this.createIRequestSender());
+
         for (let enumMember in Command) {
             enumMember = enumMember.toLowerCase();
             if (isNaN(Number(enumMember))) {
+                messageText = messageText.toLowerCase();
                 if (messageText.indexOf(enumMember) != -1) {
+                    console.log(enumMember);
                     if (_.startsWith(messageText, enumMember)) {
                         if (enumMember === (Command[Command["Price check"]]).toLowerCase()) {
-                            return new PriceCheckCommandHandler(this.createIRequestSender(), this.createCoinApi());
+                            handler =  new PriceCheckCommandHandler(this.createIRequestSender(), this.createCoinApi());
+                        }
+                        if(enumMember === (Command[Command.Help]).toLowerCase()){
+                            handler = new HelpCommandHandler(this.createIRequestSender());
                         }
                     } else {
-                        return new WrongFormatCommandHandler(this.createIRequestSender());
+                        handler =  new WrongFormatCommandHandler(this.createIRequestSender());
                     }
-                }
-                else {
-                    return new UnknownCommandHandler(this.createIRequestSender());
                 }
             }
         }
+        return handler;
     }
     createSourceValidator(): IRequestSourceValidator {
         return new RequestSourceValidator()

@@ -13,6 +13,7 @@ import UnknownCommandHandler from "../src/commandHandlers/UnknownCommandHandler"
 import Axios , {AxiosInstance} from "axios";
 import CoinApi from "../src/CoinApi";
 import RequestSender from "../src/RequestSender";
+import HelpCommandHandler from "../src/commandHandlers/HelpCommandHandler";
 
 describe('Factory', () => {
     let factory: IFactory;
@@ -81,6 +82,12 @@ describe('Factory', () => {
         const text = 'blah blah';
         const handler = factory.createCommandHandler(text);
         expect(handler).toBeInstanceOf(UnknownCommandHandler);
+    });
+
+    test('createCommandHandler_WhenCalledWithHelpText_ShouldRetutnHelpCommandHandler', () => {
+        const text = 'help';
+        const handler = factory.createCommandHandler(text);
+        expect(handler).toBeInstanceOf(HelpCommandHandler);
     });
 
     test('createAxiosInstance_WhenCalled_ShouldReturnAxiosInstance', () => {

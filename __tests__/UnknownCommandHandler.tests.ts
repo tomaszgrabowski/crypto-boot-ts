@@ -17,18 +17,6 @@ describe('UnknownCommandHandler', () => {
 
         requestSender = new Mock<IRequestSender>();
         requestSender.setup(x => x.Send(It.IsAny()));
-        options = {
-            "recipient": {
-                "id": "test"
-            },
-            "message": {
-                text: CommandParserError[CommandParserError["Unknown command, please type 'help' for more infromation..."]]
-            }
-        };
-        requestBody = {
-            qs: { "access_token": "testtoken" },
-            json: options
-        }
         handler = new UnknownCommandHandler(requestSender.object());
     });
 

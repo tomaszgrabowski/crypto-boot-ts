@@ -47,31 +47,39 @@ describe('PriceCheckCommandHandler', () => {
         const handler = new PriceCheckCommandHandler(requestSender.object(),
             coinApiMock.object());
         await handler.respond("test", "price check btc");
-        requestSender.verify(x=>x.Send(
-            Is.Eq({ uri: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: { access_token: 'testtoken' },
-            method: 'POST',
-            json:
-             { recipient: { id: 'test' },
-               message:
-                { text: 'Bitcoin price is : 9024.09 $, change on last 24h : -4.18 %' } } })
+        requestSender.verify(x => x.Send(
+            Is.Eq({
+                uri: 'https://graph.facebook.com/v2.6/me/messages',
+                qs: { access_token: 'testtoken' },
+                method: 'POST',
+                json:
+                {
+                    recipient: { id: 'test' },
+                    message:
+                        { text: 'Bitcoin price is : 9024.09 $, change on last 24h : -4.18 %' }
+                }
+            })
         ), Times.Once());
     });
 
-    test('Respond_WhenCalledWithNonExistingCoin_ShouldSendSorryText',async ()=>{
+    test('Respond_WhenCalledWithNonExistingCoin_ShouldSendSorryText', async () => {
         coinApiMock.setup(x => x.getByName(It.IsAny())).returns(Promise.resolve(null));
         requestSender.setup(x => x.Send(It.IsAny()));
         const handler = new PriceCheckCommandHandler(requestSender.object(),
             coinApiMock.object());
         await handler.respond("test", "price check btcc");
-        requestSender.verify(x=>x.Send(
-            Is.Eq({ uri: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: { access_token: 'testtoken' },
-            method: 'POST',
-            json:
-             { recipient: { id: 'test' },
-               message:
-                { text: "Sorry, I wasn't able to find this coin..." } } })
+        requestSender.verify(x => x.Send(
+            Is.Eq({
+                uri: 'https://graph.facebook.com/v2.6/me/messages',
+                qs: { access_token: 'testtoken' },
+                method: 'POST',
+                json:
+                {
+                    recipient: { id: 'test' },
+                    message:
+                        { text: "Sorry, I wasn't able to find this coin..." }
+                }
+            })
         ), Times.Once());
     });
 });
